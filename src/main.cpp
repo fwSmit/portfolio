@@ -14,8 +14,8 @@ int main()
     tgui::Gui gui{window}; // Create the gui and attach it to the window
 	tgui::Theme::Ptr theme = tgui::Theme::create("/home/friso/tgui-git/src/TGUI/widgets/Black.txt");
 
-	Project* lightrays = (Project) new Project_lightrays(window);
-
+	//	Project* lightrays = (Project) new Project_lightrays(window);
+	Project_lightrays lightrays(window);
     tgui::Button::Ptr button = theme->load("button");
 	button->setText("start");
 	button->setSize(sf::Vector2f(200, 50));
