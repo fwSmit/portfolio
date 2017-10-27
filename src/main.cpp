@@ -1,16 +1,20 @@
 #include <TGUI/TGUI.hpp>
 #include <iostream>
 #include <functional>
+#include "Project_lightrays.h"
 
 using namespace std;
 
 void buttonPressed(tgui::Gui& gui);
+bool isLightraysStarted = false;
 
 int main()
 {
     sf::RenderWindow window{{800, 600}, "Window"};
     tgui::Gui gui{window}; // Create the gui and attach it to the window
 	tgui::Theme::Ptr theme = tgui::Theme::create("/home/friso/tgui-git/src/TGUI/widgets/Black.txt");
+
+	Project* lightrays = (Project) new Project_lightrays(window);
 
     tgui::Button::Ptr button = theme->load("button");
 	button->setText("start");
@@ -35,6 +39,7 @@ int main()
 
         window.clear();
         gui.draw(); // Draw all widgets
+		if(isLightraysStarted) lightrays.loop();
         window.display();
     }
 }
@@ -44,7 +49,7 @@ void buttonPressed(tgui::Gui& gui){
 	cout << "button pressed" << endl;
 	const tgui::Widget::Ptr button = gui.get("button");
 	button->hide();
-
-	
-	
+	isLightraysStarted = true;
 }
+
+
