@@ -5,13 +5,18 @@ project (portfolio)
 
 set (CMAKE_CXX_STANDARD 11)
 
-add_subdirectory(projects/lightrays)
-#include_directories(projects/lightrays/include)
-#add_external(lightrays)
+file(GLOB portfolio_SRC
+    "${CMAKE_SOURCE_DIR}/src/dependencies/src/*"
+)
 
-#add_dependencies(portfolio lightrays)
+add_subdirectory(dependencies)
+add_subdirectory(projects/lightrays)
+add_subdirectory(projects/image_drawing)
 
 include_directories("${CMAKE_SOURCE_DIR}/projects/lightrays/include")
+include_directories("${CMAKE_SOURCE_DIR}/projects/image_drawing")
+include_directories("${CMAKE_SOURCE_DIR}/projects/image_drawing/images")
+include_directories(${CMAKE_SOURCE_DIR}/dependencies/include)
 
 #include the necessary libraries
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
@@ -26,5 +31,5 @@ if(NOT TGUI_FOUND)
     message(FATAL_ERROR "Could not find TGUI")
 endif()
 
-add_executable(portfolio main.cpp)
-target_link_libraries(portfolio ${TGUI_LIBRARY} ${SFML_LIBRARIES} lightrays_lib)
+add_executable(portfolio main.cpp ${portfolio_SRC})
+target_link_libraries(portfolio ${TGUI_LIBRARY} ${SFML_LIBRARIES} dependencies lightrays_lib image_drawing)

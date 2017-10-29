@@ -1,3 +1,6 @@
 [submodule "lightrays"]
 	path = src/projects/lightrays
 	url = ../lightrays
+[submodule "src/projects/image_drawing"]
+	path = src/projects/image_drawing
+	url = https://github.com/fwSmit/image_drawing.git
