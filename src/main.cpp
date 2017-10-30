@@ -17,7 +17,7 @@ int main()
     tgui::Gui gui{window}; // Create the gui and attach it to the window
 	tgui::Theme::Ptr theme = tgui::Theme::create("/home/friso/tgui-git/src/TGUI/widgets/Black.txt");
 
-	Project_lightrays lightrays(window);
+	Project_lightrays lightrays(window, gui);
 	Project_imageDrawing image_drawing(window);
     tgui::Button::Ptr button = theme->load("button");
 	button->setText("lightrays");
@@ -59,12 +59,13 @@ int main()
 					break;
 			}
             gui.handleEvent(event); // Pass the event to the widgets
+			lightrays.handleEvent(event);
         }
 
         window.clear();
-        gui.draw(); // Draw all widgets
 		if(isLightraysStarted) lightrays.loop();
 		if(isImageDrawingStarted) image_drawing.loop(); 
+        gui.draw(); // Draw all widgets
         window.display();
     }
 }
