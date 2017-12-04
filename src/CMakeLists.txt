@@ -8,7 +8,12 @@ set (IS_LIBRARY TRUE)
 
 file(GLOB portfolio_SRC
     "${CMAKE_SOURCE_DIR}/src/dependencies/src/*"
+    "${CMAKE_SOURCE_DIR}/*.cpp"
 )
+
+message(STATUS ${portfolio_SRC})
+message(STATUS "build dir")
+message(STATUS ${CMAKE_SOURCE_DIR})
 
 add_subdirectory(dependencies)
 add_subdirectory(projects/lightrays)

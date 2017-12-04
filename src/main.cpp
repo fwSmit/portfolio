@@ -3,6 +3,7 @@
 #include <functional>
 #include "Project_lightrays.h"
 #include "Project_imageDrawing.h"
+#include "Manager.h"
 
 using namespace std;
 
@@ -15,24 +16,9 @@ int main()
 {
     sf::RenderWindow window{{800, 600}, "Window"};
     tgui::Gui gui{window}; // Create the gui and attach it to the window
-	tgui::Theme::Ptr theme = tgui::Theme::create("/home/friso/tgui-git/src/TGUI/widgets/Black.txt");
 
-	Project_lightrays lightrays(window, gui);
-	Project_imageDrawing image_drawing(window);
-    tgui::Button::Ptr button = theme->load("button");
-	button->setText("lightrays");
-	button->setSize(sf::Vector2f(200, 50));
-	button->connect("pressed", buttonPressed, std::ref(gui));
-    button->setPosition(400-button->getSize().x/2, 200);
+	Manager manager(window, gui);
 
-    tgui::Button::Ptr button2 = theme->load("button");
-	button2->setText("image drawing");
-	button2->setSize(sf::Vector2f(200, 50));
-	button2->connect("pressed", buttonPressed2, std::ref(gui));
-    button2->setPosition(400-button->getSize().x/2, 300);
-    
-    gui.add(button, "button");
-    gui.add(button2, "button2");
 
     while (window.isOpen())
     {
@@ -48,9 +34,7 @@ int main()
 				// key pressed
 				case sf::Event::KeyPressed:
 					if(event.key.code == sf::Keyboard::Escape){
-						isLightraysStarted = false;
-						isImageDrawingStarted = false;
-						showAllButtons(gui);
+						manager.closeAll();
 					}
 					break;
 
@@ -59,12 +43,12 @@ int main()
 					break;
 			}
             gui.handleEvent(event); // Pass the event to the widgets
-			lightrays.handleEvent(event);
+			manager.handleEvent(event);
+			//lightrays.handleEvent(event); 													// TODO Move to manager
         }
 
         window.clear();
-		if(isLightraysStarted) lightrays.loop();
-		if(isImageDrawingStarted) image_drawing.loop(); 
+		manager.loop();
         gui.draw(); // Draw all widgets
         window.display();
     }
